@@ -1,0 +1,7 @@
+{
+  "name": "newsletter-bake-monorepo",
+  "workspaces": [
+    "app1",
+    "app2"
+  ]
+}

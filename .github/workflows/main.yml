@@ -1,0 +1,29 @@
+name: "Continuous Deployment"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency: ${{ github.event_name == 'push' && 'main' || github.run_id }}
+jobs:
+  bake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
+
+      - if: github.event_name == 'push'
+        uses: docker/bake-action@v2.3.0
+        with:
+          push: true
+
+      - if: github.event_name == 'pull_request'
+        uses: docker/bake-action@v2.3.0
+        with:
+          push: false
+          # Explicitly remove pushing to cache to not pollute the cache with PR
+          # specific dependencies.
+          set: |
+            *.cache-to=
