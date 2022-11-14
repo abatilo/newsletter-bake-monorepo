@@ -29,6 +29,6 @@ jobs:
         with:
           push: false
           # Explicitly remove pushing to cache to not pollute the cache with PR
-          # specific dependencies.
+          # specific layers.
           set: |
             *.cache-to=
