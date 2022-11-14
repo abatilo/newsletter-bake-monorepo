@@ -26,8 +26,7 @@ COPY ./internal ./internal
 COPY ./cmd ./cmd
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go install -ldflags="-w -s" ./cmd/...
 
-# FROM gcr.io/distroless/static-debian11:nonroot
-FROM alpine:3
+FROM gcr.io/distroless/static-debian11:nonroot
 ENV STATIC_ASSETS_PATH /static
 
 ARG app
